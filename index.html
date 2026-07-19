@@ -147,8 +147,20 @@
   <div class="section" style="padding-bottom: 8px;">
     <div class="section-label">Gallery</div>
   </div>
-  <div id="photo-count" class="photo-count">0장</div>
-  <div class="gallery" id="gallery"></div>
+  <div class="gallery" id="gallery">
+    <div class="gallery-item"><img src="0407amA00519.jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA00953(8).jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA01513.jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA01667.jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA01691.jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA10359.jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA10483(16).jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA10504.jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA10666(8).jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA10770.jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA10885.jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+    <div class="gallery-item"><img src="0407amA10969.jpg" alt="웨딩 사진" onerror="this.parentElement.style.display='none'"></div>
+  </div>
 
   <hr class="divider">
 
@@ -201,61 +213,6 @@
 </div>
 
 <script>
-  let photos = [];
-
-  function updateGallery() {
-    const gallery = document.getElementById('gallery');
-    const countEl = document.getElementById('photo-count');
-    gallery.innerHTML = '';
-
-    photos.forEach((src, i) => {
-      const item = document.createElement('div');
-      item.className = 'gallery-item';
-      const img = document.createElement('img');
-      img.src = src;
-      const removeBtn = document.createElement('button');
-      removeBtn.className = 'remove-btn';
-      removeBtn.innerHTML = '×';
-      removeBtn.onclick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        photos.splice(i, 1);
-        updateGallery();
-      };
-      item.appendChild(img);
-      item.appendChild(removeBtn);
-      gallery.appendChild(item);
-    });
-
-    const addLabel = document.createElement('label');
-    addLabel.className = 'gallery-add-btn';
-    addLabel.innerHTML = '+ 사진 추가하기';
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.multiple = true;
-    fileInput.style.display = 'none';
-    fileInput.onchange = handleFiles;
-    addLabel.appendChild(fileInput);
-    gallery.appendChild(addLabel);
-
-    countEl.textContent = photos.length + '장';
-  }
-
-  function handleFiles(e) {
-    const files = Array.from(e.target.files);
-    let loaded = 0;
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = ev => {
-        photos.push(ev.target.result);
-        loaded++;
-        if (loaded === files.length) updateGallery();
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
   function switchTab(side, btn) {
     document.querySelectorAll('.account-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.account-panel').forEach(p => p.classList.remove('active'));
@@ -271,7 +228,7 @@
     });
   }
 
-  updateGallery();
+
 </script>
 </body>
 </html>
