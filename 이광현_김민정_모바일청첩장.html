@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이광현 ♥ 김민정 청첩장</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f0ebe2; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 24px 0 48px; }
+
+    .card { max-width: 360px; width: 100%; background: #faf8f5; border-radius: 16px; overflow: hidden; font-family: 'Noto Serif KR', serif; box-shadow: 0 4px 24px rgba(58,46,38,0.10); }
+
+    .hero { background: #f5f0e8; padding: 48px 24px 36px; text-align: center; }
+    .deco-line { width: 40px; height: 1px; background: #b8a99a; display: inline-block; vertical-align: middle; margin: 0 10px; }
+    .deco-text { font-size: 11px; letter-spacing: 3px; color: #9e8e7e; font-family: 'Playfair Display', serif; font-style: italic; }
+    .names { margin: 20px 0 8px; font-size: 28px; font-weight: 400; color: #3a2e26; letter-spacing: 2px; }
+    .heart { color: #c9a89a; font-size: 14px; margin: 0 6px; }
+    .date-badge { margin-top: 16px; font-size: 13px; color: #7a6a5a; letter-spacing: 1px; line-height: 1.9; font-weight: 300; }
+
+    .divider { border: none; border-top: 1px solid #e0d8cf; }
+
+    .section { padding: 28px; text-align: center; }
+    .section-label { font-size: 10px; letter-spacing: 3px; color: #9e8e7e; text-transform: uppercase; margin-bottom: 14px; font-family: 'Playfair Display', serif; font-style: italic; }
+    .greeting { font-size: 13.5px; line-height: 2; color: #4a3e34; font-weight: 300; word-break: keep-all; }
+
+    .couple-section { padding: 24px 28px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; text-align: center; }
+    .person { display: flex; flex-direction: column; gap: 4px; }
+    .person-role { font-size: 10px; color: #9e8e7e; letter-spacing: 2px; font-style: italic; font-family: 'Playfair Display', serif; }
+    .person-family { font-size: 11px; color: #7a6a5a; font-weight: 300; margin-top: 2px; line-height: 1.6; }
+    .person-name { font-size: 18px; font-weight: 400; color: #3a2e26; letter-spacing: 2px; }
+    .heart-center { font-size: 18px; color: #c9a89a; }
+    .deceased { color: #7a6a5a; font-style: italic; font-size: 12px; }
+
+    .info-row { display: flex; align-items: flex-start; gap: 12px; text-align: left; margin-bottom: 14px; }
+    .info-icon { font-size: 15px; color: #b8a99a; margin-top: 2px; flex-shrink: 0; }
+    .info-content { font-size: 13px; color: #4a3e34; line-height: 1.8; font-weight: 300; }
+    .info-content strong { font-weight: 500; color: #3a2e26; display: block; font-size: 14px; }
+
+    .map-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px; background: #f0ebe2; border: 1px solid #d8d0c4; border-radius: 8px; color: #5a4e42; font-size: 13px; font-family: 'Noto Serif KR', serif; cursor: pointer; margin-top: 16px; text-decoration: none; }
+    .map-btn:hover { background: #e8e0d4; }
+
+    /* 갤러리 */
+    .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+    .gallery-item { aspect-ratio: 1; background: #ede8e0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4px; color: #b8a99a; font-size: 10px; letter-spacing: 1px; cursor: pointer; position: relative; overflow: hidden; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+    .gallery-item input[type=file] { display: none; }
+    .gallery-add-btn { grid-column: span 3; padding: 14px; background: #f5f0e8; border: 1px dashed #c9b8a8; color: #9e8e7e; font-size: 12px; font-family: 'Noto Serif KR', serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; }
+    .gallery-add-btn:hover { background: #ede8e0; }
+    .gallery-item .remove-btn { position: absolute; top: 4px; right: 4px; background: rgba(58,46,38,0.6); border: none; border-radius: 50%; width: 20px; height: 20px; color: #faf8f5; font-size: 14px; cursor: pointer; display: none; align-items: center; justify-content: center; line-height: 1; }
+    .gallery-item:hover .remove-btn { display: flex; }
+    .photo-count { font-size: 11px; color: #b8a99a; text-align: right; padding: 6px 8px 0; }
+
+    /* 계좌 */
+    .account-tabs { display: flex; border-bottom: 1px solid #e0d8cf; margin-bottom: 16px; }
+    .account-tab { flex: 1; padding: 8px 4px; font-size: 12px; color: #9e8e7e; text-align: center; cursor: pointer; border-bottom: 2px solid transparent; font-family: 'Noto Serif KR', serif; background: none; border-left: none; border-right: none; border-top: none; }
+    .account-tab.active { color: #3a2e26; border-bottom: 2px solid #b8a99a; }
+    .account-panel { display: none; }
+    .account-panel.active { display: block; }
+    .account-row { background: #f5f0e8; border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; }
+    .account-who { font-size: 11px; color: #9e8e7e; margin-bottom: 4px; }
+    .account-info { font-size: 13px; color: #3a2e26; font-weight: 400; line-height: 1.6; }
+    .account-copy { display: flex; align-items: center; justify-content: flex-end; margin-top: 6px; }
+    .copy-btn { font-size: 11px; color: #9e8e7e; background: none; border: 1px solid #d8d0c4; border-radius: 4px; padding: 3px 8px; cursor: pointer; font-family: 'Noto Serif KR', serif; }
+    .copy-btn:hover { background: #ede8e0; }
+
+    .footer { padding: 20px 28px 28px; text-align: center; background: #f0ebe2; }
+    .footer-text { font-size: 11px; color: #9e8e7e; line-height: 1.8; font-weight: 300; }
+    .ornament { font-size: 18px; color: #c9a89a; margin-bottom: 8px; display: block; }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <!-- 히어로 -->
+  <div class="hero">
+    <div>
+      <span class="deco-line"></span>
+      <span class="deco-text">Wedding Invitation</span>
+      <span class="deco-line"></span>
+    </div>
+    <div class="names">이광현 <span class="heart">♥</span> 김민정</div>
+    <div class="date-badge">2026년 10월 24일 토요일<br>오전 11시 30분</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 인사말 -->
+  <div class="section">
+    <div class="section-label">Invitation</div>
+    <p class="greeting">
+      두 사람이 하나가 되어<br>
+      새로운 삶을 시작하려 합니다.<br><br>
+      바쁜 일상 속에서도<br>
+      소중한 발걸음으로 함께해 주신다면<br>
+      더없이 큰 기쁨이 되겠습니다.<br><br>
+      오래도록 기억할 그날,<br>
+      귀한 자리를 빛내 주세요.
+    </p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 신랑/신부 -->
+  <div class="couple-section">
+    <div class="person">
+      <span class="person-role">Groom</span>
+      <span class="person-name">이광현</span>
+      <span class="person-family">이오중 · 박신우의 아들</span>
+    </div>
+    <div class="heart-center">♥</div>
+    <div class="person">
+      <span class="person-role">Bride</span>
+      <span class="person-name">김민정</span>
+      <span class="person-family"><span class="deceased">故 김규한</span> · 이달란의 딸</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 일시/장소 -->
+  <div class="section" style="padding-bottom: 0;">
+    <div class="section-label">Date & Venue</div>
+    <div class="info-row">
+      <span class="info-icon">📅</span>
+      <div class="info-content">
+        <strong>2026년 10월 24일 토요일</strong>
+        오전 11시 30분
+      </div>
+    </div>
+    <div class="info-row" style="margin-bottom: 0;">
+      <span class="info-icon">📍</span>
+      <div class="info-content">
+        <strong>대구 라온웨딩</strong>
+        대구 북구 칠곡중앙대로 59
+      </div>
+    </div>
+    <a class="map-btn" href="https://naver.me/5pwcajbW" target="_blank">
+      🗺 네이버맵으로 오시는 길 보기
+    </a>
+  </div>
+
+  <hr class="divider" style="margin-top: 28px;">
+
+  <!-- 갤러리 -->
+  <div class="section" style="padding-bottom: 8px;">
+    <div class="section-label">Gallery</div>
+  </div>
+  <div id="photo-count" class="photo-count">0장</div>
+  <div class="gallery" id="gallery"></div>
+
+  <hr class="divider">
+
+  <!-- 계좌 -->
+  <div class="section">
+    <div class="section-label">Accounts</div>
+    <div class="account-tabs">
+      <button class="account-tab active" onclick="switchTab('groom', this)">신랑측</button>
+      <button class="account-tab" onclick="switchTab('bride', this)">신부측</button>
+    </div>
+    <div class="account-panel active" id="tab-groom">
+      <div class="account-row">
+        <div class="account-who">신랑 이광현</div>
+        <div class="account-info">IM뱅크 508-14-058616-7</div>
+        <div class="account-copy"><button class="copy-btn" onclick="copyText('508-14-058616-7', this)">복사</button></div>
+      </div>
+      <div class="account-row">
+        <div class="account-who">아버지 이오중</div>
+        <div class="account-info">국민은행 839802-01-425026</div>
+        <div class="account-copy"><button class="copy-btn" onclick="copyText('83980201425026', this)">복사</button></div>
+      </div>
+      <div class="account-row">
+        <div class="account-who">어머니 박신우</div>
+        <div class="account-info">IM뱅크 076-13-005419</div>
+        <div class="account-copy"><button class="copy-btn" onclick="copyText('07613005419', this)">복사</button></div>
+      </div>
+    </div>
+    <div class="account-panel" id="tab-bride">
+      <div class="account-row">
+        <div class="account-who">신부 김민정</div>
+        <div class="account-info">농협 302-0540-6967-91</div>
+        <div class="account-copy"><button class="copy-btn" onclick="copyText('302-0540-6967-91', this)">복사</button></div>
+      </div>
+      <div class="account-row">
+        <div class="account-who">어머니 이달란</div>
+        <div class="account-info">IM뱅크 062-08-177071-002</div>
+        <div class="account-copy"><button class="copy-btn" onclick="copyText('062-08-177071-002', this)">복사</button></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 푸터 -->
+  <div class="footer">
+    <span class="ornament">❦</span>
+    <p class="footer-text">두 사람의 첫걸음을<br>따뜻하게 응원해 주세요</p>
+  </div>
+
+</div>
+
+<script>
+  let photos = [];
+
+  function updateGallery() {
+    const gallery = document.getElementById('gallery');
+    const countEl = document.getElementById('photo-count');
+    gallery.innerHTML = '';
+
+    photos.forEach((src, i) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      const img = document.createElement('img');
+      img.src = src;
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'remove-btn';
+      removeBtn.innerHTML = '×';
+      removeBtn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        photos.splice(i, 1);
+        updateGallery();
+      };
+      item.appendChild(img);
+      item.appendChild(removeBtn);
+      gallery.appendChild(item);
+    });
+
+    const addLabel = document.createElement('label');
+    addLabel.className = 'gallery-add-btn';
+    addLabel.innerHTML = '+ 사진 추가하기';
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.multiple = true;
+    fileInput.style.display = 'none';
+    fileInput.onchange = handleFiles;
+    addLabel.appendChild(fileInput);
+    gallery.appendChild(addLabel);
+
+    countEl.textContent = photos.length + '장';
+  }
+
+  function handleFiles(e) {
+    const files = Array.from(e.target.files);
+    let loaded = 0;
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        photos.push(ev.target.result);
+        loaded++;
+        if (loaded === files.length) updateGallery();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function switchTab(side, btn) {
+    document.querySelectorAll('.account-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.account-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + side).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = '복사됨 ✓';
+      setTimeout(() => btn.textContent = orig, 1500);
+    });
+  }
+
+  updateGallery();
+</script>
+</body>
+</html>
