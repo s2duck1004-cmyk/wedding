@@ -1,170 +1,47 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>모바일 청첩장</title>
-  <style>
-    /* --- 기존 스타일 항목들이 있다면 여기에 위치합니다 --- */
-
-    /* [추가] 라이트박스 전체 배경 (기본 숨김) */
-    .lightbox-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.85);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    /* [추가] 라이트박스 활성화 상태 */
-    .lightbox-overlay.active {
-      display: flex;
-      opacity: 1;
-    }
-
-    /* [추가] 확대되어 보여질 이미지 스타일 */
-    .lightbox-img {
-      max-width: 90%;
-      max-height: 85%;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      transform: scale(0.9);
-      transition: transform 0.3s ease;
-    }
-
-    .lightbox-overlay.active .lightbox-img {
-      transform: scale(1);
-    }
-
-    /* [추가] 우측 상단 닫기 버튼 (x) */
-    .lightbox-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 35px;
-      color: #fff;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    /* [추가] 갤러리 이미지 마우스 포인터 및 반응 효과 */
-    .gallery-img {
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    .gallery-img:hover {
-      transform: scale(1.02);
-    }
-  </style>
-</head>
-<body>
-
-<div class="wrapper">
-
-  <!-- 갤러리 영역 (사진 1번 ~ 14번) -->
-  <!-- ※ 각 이미지의 src="img/1.jpg" 부분을 실제 파일 경로에 맞게 고쳐주세요! -->
-  <div class="gallery-container">
-    <img src="img/1.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 1">
-    <img src="img/2.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 2">
-    <img src="img/3.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 3">
-    <img src="img/4.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 4">
-    <img src="img/5.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 5">
-    <img src="img/6.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 6">
-    <img src="img/7.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 7">
-    <img src="img/8.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 8">
-    <img src="img/9.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 9">
-    <img src="img/10.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 10">
-    <img src="img/11.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 11">
-    <img src="img/12.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 12">
-    <img src="img/13.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 13">
-    <img src="img/14.jpg" class="gallery-img" onclick="openLightbox(this.src)" alt="사진 14">
-  </div>
-
-  <!-- 계좌 정보 영역 (기존 코드) -->
-  <div class="account-panel" id="tab-groom">
-    <div class="account-row">
-      <div class="account-who">아버지 이오중</div>
-      <div class="account-info">국민은행 839802-01-425026</div>
-      <div class="account-copy"><button class="copy-btn" onclick="copyText('83980201425026', this)">복사</button></div>
-    </div>
-    <div class="account-row">
-      <div class="account-who">어머니 박신우</div>
-      <div class="account-info">IM뱅크 076-13-005419</div>
-      <div class="account-copy"><button class="copy-btn" onclick="copyText('07613005419', this)">복사</button></div>
-    </div>
-  </div>
-  
-  <div class="account-panel" id="tab-bride">
-    <div class="account-row">
-      <div class="account-who">신부 김민정</div>
-      <div class="account-info">농협 302-0540-6967-91</div>
-      <div class="account-copy"><button class="copy-btn" onclick="copyText('302-0540-6967-91', this)">복사</button></div>
-    </div>
-    <div class="account-row">
-      <div class="account-who">어머니 이달란</div>
-      <div class="account-info">IM뱅크 062-08-177071-002</div>
-      <div class="account-copy"><button class="copy-btn" onclick="copyText('062-08-177071-002', this)">복사</button></div>
-    </div>
-  </div>
-
-  <hr class="divider">
- 
-  <!-- 푸터 영역 (기존 코드) -->
-  <div class="footer">
-    <span class="ornament">❦</span>
-    <p class="footer-text">두 사람의 첫걸음을<br>따뜻하게 응원해 주세요</p>
-  </div>
- 
-</div>
-
-<!-- [추가] 라이트박스 팝업 틀 (클릭 시 화면을 덮는 요소) -->
-<div id="lightbox" class="lightbox-overlay" onclick="closeLightbox()">
-  <span class="lightbox-close">&times;</span>
-  <img id="lightbox-src" class="lightbox-img" src="" alt="확대된 이미지">
-</div>
- 
-<script>
-  // 기존 탭 전환 기능
-  function switchTab(side, btn) {
-    document.querySelectorAll('.account-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.account-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('tab-' + side).classList.add('active');
-    btn.classList.add('active');
-  }
- 
-  // 기존 텍스트 복사 기능
-  function copyText(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
-      const orig = btn.textContent;
-      btn.textContent = '복사됨 ✓';
-      setTimeout(() => btn.textContent = orig, 1500);
-    });
-  }
-
-  // [추가] 라이트박스 열기 함수
-  function openLightbox(src) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-src');
-    
-    lightboxImg.src = src;
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden'; /* 뒷화면 스크롤 방지 */
-  }
- 
-  // [추가] 라이트박스 닫기 함수
-  function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    lightbox.classList.remove('active');
-    document.body.style.overflow = 'auto'; /* 뒷화면 스크롤 재개 */
-  }
-</script>
-
-</body>
-</html>
+/* --- 여기부터 라이트박스 기능 스타일 --- */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.lightbox-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+.lightbox-img {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+.lightbox-overlay.active .lightbox-img {
+  transform: scale(1);
+}
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 35px;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+}
+.gallery-img {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.gallery-img:hover {
+  transform: scale(1.02);
+}
+/* --- 여기까지 라이thㅡ박스 기능 스타일 --- */
