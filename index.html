@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>이광현 ♥ 김민정 청첩장</title>
+  <meta property="og:title" content="이광현 ♥ 김민정 결혼합니다">
+  <meta property="og:description" content="2026년 10월 24일 토요일 오전 11시 30분 · 대구 라온웨딩">
+  <meta property="og:image" content="https://s2duck1004-cmyk.github.io/wedding/1.jpg">
+  <meta property="og:url" content="https://s2duck1004-cmyk.github.io/wedding/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #f0ebe2; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 24px 0 48px; }
@@ -78,6 +83,14 @@
     .footer { padding: 20px 28px 28px; text-align: center; background: #f0ebe2; }
     .footer-text { font-size: 11px; color: #9e8e7e; line-height: 1.8; font-weight: 300; }
     .ornament { font-size: 18px; color: #c9a89a; margin-bottom: 8px; display: block; }
+    .dday { margin-top: 12px; font-size: 12px; color: #b8a99a; letter-spacing: 2px; font-family: 'Playfair Display', serif; font-style: italic; }
+    .dday span { color: #c9a89a; font-size: 15px; font-weight: 500; }
+    .bgm-btn { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: #f5f0e8; border: 1px solid #d8d0c4; box-shadow: 0 2px 12px rgba(58,46,38,0.15); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; z-index: 900; }
+    .bgm-btn.playing { animation: spin 4s linear infinite; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .share-section { padding: 8px 28px 20px; text-align: center; }
+    .kakao-btn { display: inline-flex; align-items: center; gap: 8px; background: #FEE500; border: none; border-radius: 8px; padding: 12px 28px; font-size: 14px; font-family: 'Noto Serif KR', serif; color: #3a1d1d; cursor: pointer; font-weight: 500; }
+    .kakao-btn:hover { background: #f0d800; }
   </style>
 </head>
 <body>
@@ -92,6 +105,7 @@
     </div>
     <div class="names">이광현 <span class="heart">♥</span> 김민정</div>
     <div class="date-badge">2026년 10월 24일 토요일<br>오전 11시 30분</div>
+    <div class="dday" id="dday">계산 중...</div>
   </div>
 
   <hr class="divider">
@@ -231,9 +245,74 @@
     <p class="footer-text">두 사람의 첫걸음을<br>따뜻하게 응원해 주세요</p>
   </div>
 
+  <!-- 카카오 공유 -->
+  <div class="share-section">
+    <button class="kakao-btn" onclick="shareKakao()">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="#3a1d1d"><path d="M12 3C6.477 3 2 6.477 2 10.5c0 2.667 1.58 5.007 3.977 6.39L5 21l4.714-2.5A11.6 11.6 0 0 0 12 18c5.523 0 10-3.477 10-7.5S17.523 3 12 3z"/></svg>
+      카카오톡으로 공유하기
+    </button>
+  </div>
+
 </div>
 
+<!-- BGM -->
+<audio id="bgm" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+<button class="bgm-btn" id="bgmBtn" onclick="toggleBgm()" title="음악 켜기/끄기">🎵</button>
+
 <script>
+  // 디데이 카운터
+  (function() {
+    const wedding = new Date('2026-10-24T11:30:00');
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const diff = Math.ceil((wedding - today) / (1000 * 60 * 60 * 24));
+    const el = document.getElementById('dday');
+    if (diff > 0) el.innerHTML = 'D - <span>' + diff + '</span>';
+    else if (diff === 0) el.innerHTML = '<span>D - Day</span> 오늘이에요! 🎉';
+    else el.innerHTML = '결혼 <span>' + Math.abs(diff) + '</span>일째';
+  })();
+
+  // BGM
+  let bgmPlaying = false;
+  function toggleBgm() {
+    const audio = document.getElementById('bgm');
+    const btn = document.getElementById('bgmBtn');
+    if (bgmPlaying) {
+      audio.pause();
+      btn.textContent = '🎵';
+      btn.classList.remove('playing');
+    } else {
+      audio.play();
+      btn.textContent = '🎶';
+      btn.classList.add('playing');
+    }
+    bgmPlaying = !bgmPlaying;
+  }
+
+  // 카카오 공유
+  function shareKakao() {
+    if (window.Kakao && !Kakao.isInitialized()) {
+      Kakao.init('791c8c97eacb3cdf24089b4b519bf03a');
+    }
+    if (window.Kakao && Kakao.isInitialized()) {
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '이광현 ♥ 김민정 결혼합니다',
+          description: '2026년 10월 24일 토요일 오전 11시 30분\n대구 라온웨딩',
+          imageUrl: 'https://s2duck1004-cmyk.github.io/wedding/1.jpg',
+          link: { mobileWebUrl: 'https://s2duck1004-cmyk.github.io/wedding/', webUrl: 'https://s2duck1004-cmyk.github.io/wedding/' }
+        },
+        buttons: [{ title: '청첩장 보기', link: { mobileWebUrl: 'https://s2duck1004-cmyk.github.io/wedding/', webUrl: 'https://s2duck1004-cmyk.github.io/wedding/' } }]
+      });
+    } else {
+      // 카카오 SDK 없을 때 링크 복사
+      navigator.clipboard.writeText('https://s2duck1004-cmyk.github.io/wedding/').then(() => {
+        alert('링크가 복사됐어요! 카카오톡에 붙여넣기 해주세요 😊');
+      });
+    }
+  }
+
   const photos = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg','9.jpg','10.jpg','11.jpg','12.jpg','13.jpg','14.jpg'];
   let currentIdx = 0;
 
